@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React, {useState, useRef} from 'react';
 import './App.css';
+import AllCardData from "./componant/AllCardData";
+import Banner from "./componant/Banner";
 
 function App() {
+  const scrollElement = useRef()
+  const [isBottom, setIsBottom] = useState(false)
+
+
+  const myScroll = () =>{
+    let clientHeight = scrollElement.current?.clientHeight;
+    let scrollHeight =  scrollElement.current?.scrollHeight;
+    let tuchBottom = scrollHeight-clientHeight+1
+
+    if(tuchBottom==scrollElement.current?.scrollTop){
+      setIsBottom(true)
+    }
+    else{
+      setIsBottom(false)
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App"  onScroll={()=>myScroll()} ref={scrollElement}>
+      <Banner />
+      <AllCardData isBottom={isBottom}/>
+      ferfa 
     </div>
   );
 }
