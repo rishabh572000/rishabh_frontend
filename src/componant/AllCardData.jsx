@@ -1,6 +1,6 @@
 import React, {useEffect, useContext, useState} from 'react';
 import { DataC } from '../Context';
-import Card from './Card'
+import Card from './Card';
 import axios from "axios";
 
 export default function AllCardData(props) {
@@ -9,9 +9,11 @@ export default function AllCardData(props) {
   const [oneTime, setOneTime] = useState(true)
   const [showData, setShowData] = useState([])
   const [filterdData, setFilterData] = useState([])
+  const [Loading, setLoading] = useState(false)
 
 
 useEffect(()=>{
+  setLoading(true)
 axios.get('https://api.spacexdata.com/v3/capsules').then((response) => {
     setData(response.data);
     let myarr=[]
@@ -19,6 +21,7 @@ axios.get('https://api.spacexdata.com/v3/capsules').then((response) => {
       myarr=[...myarr, response.data[i]]
     }
     setShowData([...myarr])
+    setLoading(false)
 
 });
 
@@ -63,7 +66,7 @@ useEffect(()=>{
 return (
   <>
     <div className='allcardData'>
-     {filterdData?.length>0? filterdData.map((val, ind)=>{
+     {Loading? 'Loading...':filterdData?.length>0? filterdData.map((val, ind)=>{
       return <Card cardData={val} key={ind}/>}) : showData.map((val, ind)=>{
         return <Card cardData={val} key={ind} />
      })}

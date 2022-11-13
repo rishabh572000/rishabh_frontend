@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {Suspense, useState} from 'react';
 import '../Styles/Banner.scss';
 import imageOne from '../Media/imOne.jpg';
 import video from '../Media/file.mp4';
-import Search from './Search';
+const Search = React.lazy(()=>import('./Search'))
 
 export default function Banner() {
 
@@ -17,7 +17,9 @@ return (
         <div className='banner_Top'>
             <div className="banner_TextH">
             <div className='bannerSearch'>
+             <Suspense fallback='Loading...'>
               <Search />
+             </Suspense>
             </div>
             
                 <p>Sky is Buityfull</p>
